@@ -14,9 +14,10 @@ from time import sleep
 from core.MySQL import MySQL
 from goods import Goods
 from order import Order
+from superform import Superform
 
-
-tasks = ('Order', 'Goods','Seckills')
+#tasks = ('Order', 'Goods','Seckills','SuperForm')
+tasks = ('Superform','Order')
 process = []
 
 class Daemon:
@@ -56,9 +57,9 @@ class Daemon:
         si = file(self.stdin, 'r')
         so = file(self.stdout, 'a+')
         se = file(self.stderr, 'a+', 0)
-        os.dup2(si.fileno(), sys.stdin.fileno())
-        os.dup2(so.fileno(), sys.stdout.fileno())
-        os.dup2(se.fileno(), sys.stderr.fileno())
+        #os.dup2(si.fileno(), sys.stdin.fileno())
+        #os.dup2(so.fileno(), sys.stdout.fileno())
+        #os.dup2(se.fileno(), sys.stderr.fileno())
 
         #注册退出函数，根据文件pid判断是否存在进程
         atexit.register(self.delpid)

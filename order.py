@@ -13,12 +13,13 @@ from core.MySQL import MySQL
 
 class Order(Process):
 
-    self.db = MySQL()
+    #self.db = MySQL()
 
     def run(self):
         # 死循环，进程不退出
-        print 'orders'
+
         while True:
+            print 'orders'
             time.sleep(5)
 
 

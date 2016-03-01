@@ -16,5 +16,5 @@ class Goods(Process):
     def run(self):
         while True:
             print 'goods ' + time.ctime()
-            sleep(10)
+            sleep(5)
 

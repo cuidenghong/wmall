@@ -14,17 +14,17 @@ class Seckill(Process):
     def run(self):
         while True:
             data = {
-                'userid'    : 1,
-                'goods_id' :2,
-                'seckill_id': 3,
-                'openid'     :4,
-                'number'     :5,
-                'price'   : 6,
+                'userid'    : 2,
+                'goods_id' :3,
+                'seckill_id': 4,
+                'openid'     :5,
+                'number'     :6,
+                'price'   : 7,
                 'over_time' : time.time(),
             }
             #self.insertSeckillLog(data)
-            print 'goods ' + time.ctime()
-            sleep(10)
+            print 'Seckill ' + time.ctime()
+            sleep(5)
 
     def insertSeckillLog(self,data):
         db = MySQL()

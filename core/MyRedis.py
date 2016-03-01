@@ -11,7 +11,7 @@ class MyRedis:
         self.dbport = configs['redis']['dbport']
         self.dbname = configs['redis']['dbname']
         #self.r = redis.Redis(self.host, self.port, self.db)
-        self.r = redis.Redis(host = self.host, port = self.port, db = self.db)
+        self.r = redis.Redis(host = self.dbhost, port = self.dbport, db = self.dbname)
     
     #1. strings 类型及操作
     #设置 key 对应的值为 string 类型的 value
