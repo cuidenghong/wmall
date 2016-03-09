@@ -20,7 +20,7 @@ class Order(Process):
 
         while True:
             print 'orders'
-            time.sleep(5)
+            time.sleep(300)
 
 
     def createOrder(self):

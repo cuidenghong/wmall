@@ -6,7 +6,7 @@ configs = {
         'dbport': '3306',
         'dbuser': 'root',
         'dbpasswd': '123456',
-        'dbname': 'seckill',
+        'dbname': 'weixin2014',
         'charset': 'utf8'
     },
     'redis': {

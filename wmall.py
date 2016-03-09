@@ -17,7 +17,7 @@ from order import Order
 from superform import Superform
 
 #tasks = ('Order', 'Goods','Seckills','SuperForm')
-tasks = ('Superform','Order')
+tasks = ('Goods','Order')
 process = []
 
 class Daemon:
