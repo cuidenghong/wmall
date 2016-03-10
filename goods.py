@@ -13,7 +13,7 @@ from multiprocessing import Process
 from time import sleep
 from core.MySQL import MySQL
 from core.MyRedis import MyRedis
-
+from core.Zip import Zip
 
 class Goods(Process):
 
@@ -29,6 +29,7 @@ class Goods(Process):
             if lists:
                 #获取商品信息
                 goodsInfo = self.getGoodsInfo(lists['goodsId'])
+                userid = lists['userid']
                 goodsId = goodsInfo[0][0]
                 if goodsId:
                     #获取图片信息
@@ -40,14 +41,18 @@ class Goods(Process):
                                 filename = imgUrl.split('/')
                                 filename = filename[-1]
                                 #下载图片
-                                self.getPic(imgUrl,filename)
+                                self.getPic(imgUrl,filename,userid)
                         #图片打包
+                        dirname = self.__imgDir + userid
+                        zipfilename = dirname + '/' + userid + '.zip'
+                        zip = Zip()
+                        zip.zip_dir(dirname,zipfilename)
 
                 print 'goods ' + time.ctime()
             else:
                 print 'is not goods'
             sleep(5)
-
+    
     """
     从redis获取list
     """
@@ -66,7 +71,7 @@ class Goods(Process):
             rs = self.__db.query(sql)
             return self.__db.fetchAllRows()
         else:
-            return false
+            return False
 
     """
     查询图片信息
@@ -77,14 +82,17 @@ class Goods(Process):
             rs = self.__db.query(sql)
             return self.__db.fetchAllRows()
         else:
-            return false
+            return False
 
     """
     下载图片保存到本地
     """
-    def getPic(self,imgUrl,filename):
+    def getPic(self,imgUrl,filename,userid):
         if imgUrl:
-            imgDir = self.__imgDir + filename
+            #判断文件目录是否存在
+            if not os.path.exists(self.__imgDir + userid):
+                os.makedirs(self.__imgDir + userid)
+            imgDir = self.__imgDir + userid + '/' + filename
             imgUrl = self.__uploadUrl + imgUrl
             urllib.urlretrieve(imgUrl,imgDir)
 

@@ -8,7 +8,13 @@ import zipfile
 
 class Zip:
 
-    def __init__(self,dirname, zipfilename):
+    def __init__(self):
+        pass
+
+    """
+    文件打包
+    """
+    def zip_dir(self,dirname, zipfilename):
         filelist = []
         fulldirname = os.path.abspath(dirname)
         fullzipfilename = os.path.abspath(zipfilename)
@@ -16,34 +22,37 @@ class Zip:
         #判断目录是否存在
         if not os.path.exists(fulldirname):
             print "Dir/File %s is not exist, Press any key to quit..." % fulldirname
-            inputStr = raw_input()
             return
+
         #判断压缩文件是否存在
         if os.path.isdir(fullzipfilename):
             tmpbasename = os.path.basename(dirname)
             fullzipfilename = os.path.normpath(os.path.join(fullzipfilename, tmpbasename))
 
-        #Get file(s) to zip ...
+        #文件遍历出来
         if os.path.isfile(dirname):
             filelist.append(dirname)
             dirname = os.path.dirname(dirname)
         else:
-            #get all file in directory
+            #g获取所有文件
             for root, dirlist, files in os.walk(dirname):
                 for filename in files:
                     filelist.append(os.path.join(root,filename))
 
-        #Start to zip file ...
+        #开始压缩文件
         destZip = zipfile.ZipFile(fullzipfilename, "w")
         for eachfile in filelist:
             destfile = eachfile[len(dirname):]
             print "Zip file %s..." % destfile
             destZip.write(eachfile, destfile)
         destZip.close()
+        return True
 
-        return true
 
-    def unzip_dir(zipfilename, unzipdirname):
+    """
+    文件解压
+    """
+    def unzip_dir(self,zipfilename, unzipdirname):
         fullzipfilename = os.path.abspath(zipfilename)
         fullunzipdirname = os.path.abspath(unzipdirname)
         print "Start to unzip file %s to folder %s ..." % (zipfilename, unzipdirname)
@@ -68,4 +77,4 @@ class Zip:
             fd.close()
         srcZip.close()
 
-        return true
+        return True
