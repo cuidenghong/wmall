@@ -23,7 +23,6 @@ class MySQL:
 		dbpasswd  = configs['db']['dbpasswd']
 		dbname    = configs['db']['dbname']
 		charset   = configs['db']['charset']
-
 		try:
 			self._conn = MySQLdb.connect(
 				host = dbhost,
@@ -54,7 +53,7 @@ class MySQL:
 	def query(self,sql):
 		#u'执行 SELECT 语句'	 
 		try:
-			self._cur.execute("SET NAMES utf8") 
+			self._cur.execute("SET NAMES utf8")
 			result = self._cur.execute(sql)
 			return result
 		except MySQLdb.Error, e:

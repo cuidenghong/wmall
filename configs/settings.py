@@ -2,7 +2,7 @@
 
 configs = {
     'db': {
-        'dbhost': '192.168.3.179',
+        'dbhost': '192.168.3.60',
         'dbport': '3306',
         'dbuser': 'root',
         'dbpasswd': '123456',

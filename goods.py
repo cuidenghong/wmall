@@ -52,7 +52,7 @@ class Goods(Process):
             else:
                 print 'is not goods'
             sleep(5)
-    
+
     """
     从redis获取list
     """
@@ -94,5 +94,8 @@ class Goods(Process):
                 os.makedirs(self.__imgDir + userid)
             imgDir = self.__imgDir + userid + '/' + filename
             imgUrl = self.__uploadUrl + imgUrl
-            urllib.urlretrieve(imgUrl,imgDir)
+            try:
+                 urllib.urlretrieve(imgUrl,imgDir)
+            except:
+
 
