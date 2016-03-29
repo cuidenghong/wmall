@@ -2,6 +2,7 @@
 #coding=utf-8
 #Model.py
 from core.MySQL import MySQL
+import string
 class Model:
 
     __primarykey = 'id'
@@ -66,16 +67,61 @@ class Model:
     """
     插入数据
     """
-    def insert(self):
-        pass
+    def insert(self,data):
+        if data:
+            column = ''
+            value = ''
+            for k,v in data.iteritems():
+                column += k.strip() + ','
+                value  += v.strip() + ','
+            column = column.rstrip(',')
+            value = value.rstrip(',')
+            sql = "insert into " + self.table + "  (" + column + ") values (" + value + ")"
+            db = self.getDb()
+            try:
+                insert_id = db.query(sql)
+                return insert_id
+            except:
+                return 'error'
+        else:
+            return 'no data'
 
     """
     修改数据
     """
-    def update(self):
-        pass
+    def update(self,data,where = ''):
+        if where:
+            where = ' where ' + where
+        if data:
+            str = ''
+            for k,v in data.iteritems():
+                str += "`"+k.strip()+"`" + "='%s'," % v.strip()
+            str = str.rstrip(',')
+            sql = 'update ' + self.table + ' set ' + str + where
+            db = self.getDb()
+            try:
+                db.update(sql)
+                return db.getRowCount()
+            except:
+                return 'error'
+
+        else:
+            return 'no data'
 
 
+    """
+    删除数据
+    """
+    def delete(self,where = ''):
+        if where:
+            where = ' where ' + where
+        sql = 'delete from ' + self.table + where
+        db = self.getDb()
+        try:
+            db.query(sql)
+            return db.getRowCount()
+        except:
+            return 'error'
 
     """
     获取总条数
