@@ -7,14 +7,15 @@ __author__ = 'Cui.D.H'
 
 #python模拟linux的守护进程
 
-import sys, os, time, atexit, string
+import atexit
+import os
+import sys
+import time
 from signal import SIGTERM
-from multiprocessing import Process
 from time import sleep
-from core.MySQL import MySQL
-from goods import Goods
-from order import Order
-from superform import Superform
+
+from tasks.Goods  import Goods
+from tasks.Order import Order
 
 #tasks = ('Order', 'Goods','Seckills','SuperForm')
 tasks = ('Goods','Order')

@@ -9,16 +9,15 @@ import sys, os, time, atexit, string
 import json
 import urllib
 from signal import SIGTERM
-from multiprocessing import Process
 from time import sleep
-from core.MySQL import MySQL
-from core.MyRedis import MyRedis
+
+from core.Tasks import Tasks
 from core.Zip import Zip
+from models.GoodsModel import GoodsModel
+from models.PicDataModel import PicDataModel
 
-class Goods(Process):
+class Goods(Tasks):
 
-    __db =  MySQL()
-    __redis = MyRedis()
     __imgDir = '/mnt/hgfs/www/python/wmall/download/'
     __uploadUrl = 'http://t.pic.dodoca.com/'
 
@@ -30,10 +29,11 @@ class Goods(Process):
                 #获取商品信息
                 goodsInfo = self.getGoodsInfo(lists['goodsId'])
                 userid = lists['userid']
-                goodsId = goodsInfo[0][0]
-                if goodsId:
+                print goodsInfo
+                picId = goodsInfo[0]
+                if picId:
                     #获取图片信息
-                    picInfo = self.getPicInfo(goodsId)
+                    picInfo = self.getPicInfo(picId)
                     if picInfo:
                         for pic in picInfo:
                             imgUrl = pic[0]
@@ -57,8 +57,9 @@ class Goods(Process):
     从redis获取list
     """
     def getGoodsQueue(self):
+        redis = self.getRedis()
         sKey = 'goods_queue'
-        lists = self.__redis.lpop(sKey)
+        lists = redis.lpop(sKey)
         if lists:
             return json.loads(lists)
 
@@ -66,10 +67,10 @@ class Goods(Process):
     从数据库获取商品信息
     """
     def getGoodsInfo(self,goodsId):
+        gModel = GoodsModel()
         if goodsId:
-            sql = "select pic_id from wx_goods where id = %s " % goodsId
-            rs = self.__db.query(sql)
-            return self.__db.fetchAllRows()
+            rs = gModel.getOne("pic_id",'id= %s' % goodsId )
+            return rs
         else:
             return False
 
@@ -77,10 +78,10 @@ class Goods(Process):
     查询图片信息
     """
     def getPicInfo(self,id):
+        pModel = PicDataModel()
         if id:
-            sql = "select org from pic_data where id in (%s)  " % id
-            rs = self.__db.query(sql)
-            return self.__db.fetchAllRows()
+            rs = pModel.getOne("org",'id in (%s) ' % id )
+            return rs
         else:
             return False
 
@@ -95,7 +96,9 @@ class Goods(Process):
             imgDir = self.__imgDir + userid + '/' + filename
             imgUrl = self.__uploadUrl + imgUrl
             try:
-                 urllib.urlretrieve(imgUrl,imgDir)
+                print imgUrl
+                urllib.urlretrieve(imgUrl,imgDir)
             except:
+                pass
 
 

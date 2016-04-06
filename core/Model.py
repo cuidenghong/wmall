@@ -30,7 +30,6 @@ class Model:
             order = ' order by ' +order
         try:
             sql = 'select ' + fields + ' from ' + self.table + where + ' ' + order + ' limit 1 '
-            print sql
             rs = db.query(sql)
             if rs:
                 return db.fetchOneRow();

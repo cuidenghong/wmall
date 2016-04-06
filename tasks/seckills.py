@@ -8,7 +8,7 @@ import sys, os, time, atexit, string
 from signal import SIGTERM
 from multiprocessing import Process
 from time import sleep
-from core.MySQL import MySQL
+from wmall.core.MySQL import MySQL
 
 class Seckill(Process):
     def run(self):

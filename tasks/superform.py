@@ -11,8 +11,8 @@ import urllib
 from signal import SIGTERM
 from multiprocessing import Process
 from time import sleep
-from core.MySQL import MySQL
-from core.MyRedis import MyRedis
+from wmall.core.MySQL import MySQL
+from wmall.core.MyRedis import MyRedis
 
 
 

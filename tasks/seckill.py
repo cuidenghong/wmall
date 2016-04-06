@@ -1,7 +1,7 @@
 #coding=utf-8 
 import time
-from core.MySQL import MySQL
-from core.MyRedis import MyRedis
+from wmall.core.MySQL import MySQL
+from wmall.core.MyRedis import MyRedis
 
 
 '''

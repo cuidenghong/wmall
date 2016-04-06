@@ -9,7 +9,6 @@ import sys, os, time, atexit, string
 from signal import SIGTERM
 from multiprocessing import Process
 from time import sleep
-from core.MySQL import MySQL
 
 class Order(Process):
 
